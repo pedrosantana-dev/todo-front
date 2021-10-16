@@ -46,7 +46,7 @@ export class ApiService {
 
         if (this.token) {
           this.toast.success('Logado com sucesso, redirecinando agora...', "", {
-            timeOut: 7000,
+            timeOut: 3000,
             positionClass: 'toast-top-center'
           }).onHidden.toPromise().then(() => {
             this.jwtToken$.next(this.token);
@@ -54,7 +54,11 @@ export class ApiService {
             this.router.navigateByUrl('/').then();
           });
         }
-      }, (err: HttpErrorResponse) => console.log(err.message));
+      }, (err: HttpErrorResponse) => {
+        this.toast.error('Usuário ou senha não confere', '', {
+          timeOut: 3000
+        });
+      });
   }
 
   logout() {
