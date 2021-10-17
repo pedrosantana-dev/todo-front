@@ -3,7 +3,8 @@ import {HttpClient, HttpErrorResponse} from "@angular/common/http";
 import {BehaviorSubject, Observable} from "rxjs";
 import {Router} from "@angular/router";
 import {ToastrService} from "ngx-toastr";
-import {tap} from "rxjs/operators";
+import {catchError, tap} from "rxjs/operators";
+import { of } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -45,7 +46,7 @@ export class ApiService {
         this.token = res.token;
 
         if (this.token) {
-          this.toast.success('Logado com sucesso, redirecinando agora...', "", {
+          this.toast.success('Logado com sucesso. Redirecinando agora...', "", {
             timeOut: 3000,
             positionClass: 'toast-top-center'
           }).onHidden.toPromise().then(() => {
@@ -55,10 +56,22 @@ export class ApiService {
           });
         }
       }, (err: HttpErrorResponse) => {
-        this.toast.error('Usuário ou senha não confere', '', {
+        this.toast.error('Usuário e/ou senha está errado', '', {
           timeOut: 3000
         });
       });
+  }
+
+  register(username: string, password: string) {
+    return this.http.post(`${this.API_URL}/auth/register`, {username, password})
+      .pipe(
+        catchError((err: HttpErrorResponse) => {
+          this.toast.error(err.error.message, "", {
+            timeOut: 3000
+          });
+          return of(0);
+        })
+      );
   }
 
   logout() {

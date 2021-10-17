@@ -1,1 +1,41 @@
-<p>register works!</p>
+<div class="text-center">
+  <div class="login-form">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-8">
+          <div class="card shadow">
+            <div class="card-header border-bottom-0" style="font-size: 2rem; font-family: Calibri, Sans-serif">
+              Registro
+            </div>
+            <div class="card-body">
+              <form #registerForm="ngForm" (ngSubmit)="registerUser(registerForm)">
+                <div class="row">
+                  <label for="username" class="col-md-4 col-form-label text-md-end">
+                    Nome de Usuário
+                  </label>
+                  <div class="col-md-6">
+                    <input type="text" id="username" class="form-control" name="username" required autofocus ngModel>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <label for="password" class="col-md-4 col-form-label text-md-end">
+                    Senha
+                  </label>
+                  <div class="col-md-6">
+                    <input type="password" id="password" class="form-control" name="password" required ngModel>
+                  </div>
+                </div>
+
+                <div class="col-md-6 offset-md-4 d-flex flex-column my-3">
+                  <button type="submit"
+                          [disabled]="registerForm.invalid" class="btn btn-primary d-block flex-grow-1 mb-3">Registrar-se</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
