@@ -61,6 +61,7 @@ export class HomeComponent implements OnInit {
   }
 
   delete(id: number) {
+
     if (confirm('Você quer remover a tarefa?')) {
       this.apiService.deleteTodo(id).subscribe(res => {
 
